@@ -1,0 +1,32 @@
+{
+  "name": "keyless-escrow-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for keyless-escrow — open, inspect, and resolve non-custodial Solana escrows as agent tools. A moderator can release funds but never steal them.",
+  "type": "module",
+  "bin": {
+    "keyless-escrow-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/index.js"
+  },
+  "keywords": ["mcp", "model-context-protocol", "solana", "escrow", "agent", "non-custodial"],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@solana/web3.js": "^1.98.0",
+    "bs58": "^6.0.0",
+    "keyless-escrow": "*",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  },
+  "license": "MIT"
+}

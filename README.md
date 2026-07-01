@@ -8,6 +8,8 @@ moderator can **release** funds to a participant but can **never steal** them.
 
 TypeScript SDK · Anchor PDA program · MCP server · x402 pay-per-use API · live demo.
 
+**▸ Live demo:** https://nirholas.github.io/solana-marketplace-escrow/ — keyless escrow, atomic swaps, and the moderator console, running real devnet transactions in your browser.
+
 ---
 
 ## The problem

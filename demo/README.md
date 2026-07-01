@@ -14,6 +14,18 @@ mocks, real transactions. Three tabs, each a self-contained flow:
   (This tab holds throwaway keys client-side to illustrate the mechanism; the real
   server-based console is [`apps/dashboard`](../apps/dashboard).)
 
+## Live (GitHub Pages)
+
+The demo is static, so it deploys to GitHub Pages on every push via
+[`.github/workflows/deploy-demo.yml`](../.github/workflows/deploy-demo.yml):
+
+> **https://nirholas.github.io/solana-marketplace-escrow/**
+
+One-time setup: repo **Settings → Pages → Source: GitHub Actions**. The build
+sets `VITE_BASE=/solana-marketplace-escrow/` so assets resolve under the repo
+path. Only the **static** demo can live on Pages — the server pieces
+(`apps/dashboard`, `packages/x402`) need a Node host (Vercel / Render / Fly).
+
 ## Run
 
 ```bash

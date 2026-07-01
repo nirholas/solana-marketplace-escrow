@@ -1,11 +1,12 @@
 {
-  "name": "keyless-escrow-monorepo",
+  "name": "solana-marketplace-escrow",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Non-custodial, arbiter-mediated escrow for Solana — the vault has no private key, so a moderator can release funds but can never steal them.",
+  "description": "Non-custodial Solana escrow SDK — a keyless vault where moderators can release funds but never steal them. Anchor PDA program, durable-nonce pre-signing, atomic Jito settlement. SDK + MCP + x402.",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "demo"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",

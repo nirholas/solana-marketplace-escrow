@@ -120,7 +120,7 @@ node --experimental-strip-types examples/devnet-lifecycle.ts
 | Path | What it is | Status |
 |------|-----------|--------|
 | [`packages/sdk`](packages/sdk) | **`keyless-escrow`** — the TypeScript SDK (presign backend, Jito settlement, outcomes) | ✅ Ready — tested |
-| [`program`](program) | Anchor PDA escrow program (the `program` backend) | ✅ Compiles to SBF · deploy-ready (`E8Spo…Ckda`) |
+| [`program`](program) | Anchor PDA escrow program (the `program` backend) | ✅ Compiles + on-chain lifecycle verified (`E8Spo…Ckda`) |
 | [`packages/mcp`](packages/mcp) | MCP server exposing the escrow lifecycle as agent tools | ✅ Ready — handshake verified |
 | [`packages/x402`](packages/x402) | x402 pay-per-use escrow-as-a-service API | ✅ Ready — builds & serves |
 | [`demo`](demo) | Browser demo of the full lifecycle on devnet | ✅ Ready — builds |
@@ -140,6 +140,11 @@ that prove the construction rather than assert it: required signers are exactly
 `{vault, authorizer}`, destinations are fixed before the vault signs, any
 destination change breaks the signed message (theft attempt fails), and only the
 designated authorizer can complete each outcome.
+
+The on-chain `program` backend is verified end-to-end against a Solana validator:
+opening deposits into the keyless PDA vault, the arbiter releases to the seller,
+and an **unauthorized signer attempting to release is rejected by the program**
+(the seller cannot pay themselves).
 
 **Trust note (presign backend):** the guarantee rests on the ephemeral vault key
 actually being destroyed. The SDK generates it, never persists it, never returns

@@ -61,52 +61,54 @@ pub mod keyless_escrow {
     /// The destination is constrained to the seller's associated token account —
     /// the caller cannot choose it.
     pub fn release(ctx: Context<Release>) -> Result<()> {
-        let escrow = &ctx.accounts.escrow;
-        require!(escrow.state == EscrowState::Active as u8, EscrowError::NotActive);
+        require!(ctx.accounts.escrow.state == EscrowState::Active as u8, EscrowError::NotActive);
         let signer = ctx.accounts.authority.key();
         require!(
-            signer == escrow.buyer || signer == escrow.arbiter,
+            signer == ctx.accounts.escrow.buyer || signer == ctx.accounts.escrow.arbiter,
             EscrowError::Unauthorized
         );
-
+        // Checks-effects-interactions: mark settled BEFORE the token CPI, so a
+        // Token-2022 transfer hook cannot re-enter and settle the escrow twice.
+        ctx.accounts.escrow.state = EscrowState::Released as u8;
         pay_out(
             &ctx.accounts.token_program,
             &ctx.accounts.vault,
             &ctx.accounts.mint,
             &ctx.accounts.destination_ata,
-            escrow,
+            &ctx.accounts.escrow,
             &ctx.accounts.rent_recipient,
-        )?;
-        ctx.accounts.escrow.state = EscrowState::Released as u8;
-        Ok(())
+        )
     }
 
     /// Refund the escrow to the BUYER. Authorized by the seller or the arbiter.
     /// The destination is constrained to the buyer's associated token account.
     pub fn refund(ctx: Context<Refund>) -> Result<()> {
-        let escrow = &ctx.accounts.escrow;
-        require!(escrow.state == EscrowState::Active as u8, EscrowError::NotActive);
+        require!(ctx.accounts.escrow.state == EscrowState::Active as u8, EscrowError::NotActive);
         let signer = ctx.accounts.authority.key();
         require!(
-            signer == escrow.seller || signer == escrow.arbiter,
+            signer == ctx.accounts.escrow.seller || signer == ctx.accounts.escrow.arbiter,
             EscrowError::Unauthorized
         );
-
+        // Checks-effects-interactions: mark settled before the token CPI.
+        ctx.accounts.escrow.state = EscrowState::Refunded as u8;
         pay_out(
             &ctx.accounts.token_program,
             &ctx.accounts.vault,
             &ctx.accounts.mint,
             &ctx.accounts.destination_ata,
-            escrow,
+            &ctx.accounts.escrow,
             &ctx.accounts.rent_recipient,
-        )?;
-        ctx.accounts.escrow.state = EscrowState::Refunded as u8;
-        Ok(())
+        )
     }
 }
 
 /// Transfer the whole vault balance to `destination_ata`, then close the empty
 /// vault and return its rent to `rent_recipient`. Signed by the escrow PDA.
+///
+/// The full live `vault.amount` is moved (not the recorded `escrow.amount`), so
+/// any tokens donated to the vault ATA are swept to the settlement recipient and
+/// the account is always left empty — otherwise a 1-unit donation could block
+/// `close_account` and lock the escrow.
 fn pay_out<'info>(
     token_program: &Interface<'info, TokenInterface>,
     vault: &InterfaceAccount<'info, TokenAccount>,
@@ -131,7 +133,7 @@ fn pay_out<'info>(
             },
             signer_seeds,
         ),
-        escrow.amount,
+        vault.amount,
         mint.decimals,
     )?;
 

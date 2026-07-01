@@ -98,4 +98,16 @@ describe('keyless-escrow', () => {
     }
     assert.isTrue(threw, 'seller must not be able to release the escrow');
   });
+
+  it('cannot be locked by a donation to the vault (drains the full balance)', async () => {
+    const { buyer, seller, mint, escrow, vault } = await scenario();
+    // Attacker donates dust straight into the vault ATA.
+    await mintTo(provider.connection, buyer, mint, vault, buyer, 500_000n);
+    await program.methods
+      .release()
+      .accounts({ authority: buyer.publicKey, escrow, mint, seller: seller.publicKey, rentRecipient: buyer.publicKey })
+      .rpc();
+    // Release drains deposit + donation and still closes the vault.
+    assert.equal((await bal(mint, seller.publicKey)).toString(), '1500000');
+  });
 });

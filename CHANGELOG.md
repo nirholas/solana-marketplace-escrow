@@ -27,4 +27,17 @@ vault has no usable private key.
   READMEs, `SECURITY.md`, `CONTRIBUTING.md`, and a devnet example.
 - CI: build + test all workspaces and an SBF build of the program.
 
+### Security
+
+- Program hardening (pre-audit): settlement drains the **full live vault
+  balance** rather than the recorded amount, so a token donation to the vault
+  cannot block `close_account` and lock the escrow. Settlement state is now set
+  **before** the token CPI (checks-effects-interactions) to preclude re-entrancy
+  via Token-2022 transfer hooks. Both verified on-chain, with a griefing test
+  added to the suite.
+- Added [`program/AUDIT.md`](program/AUDIT.md) (audit scope + invariants) and
+  [`docs/deployment.md`](docs/deployment.md) (mainnet runbook: verifiable build,
+  upgrade-authority handling). Mainnet deploy is intentionally held pending an
+  independent audit.
+
 [0.1.0]: https://github.com/nirholas/solana-marketplace-escrow/releases/tag/v0.1.0

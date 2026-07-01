@@ -131,6 +131,7 @@ node --experimental-strip-types examples/devnet-lifecycle.ts
 - [specs/protocol.md](specs/protocol.md) — the normative authorization model + wire formats
 - [docs/architecture.md](docs/architecture.md) — how the pieces fit together
 - [docs/security-model.md](docs/security-model.md) — threat model + trust assumptions
+- [program/AUDIT.md](program/AUDIT.md) — audit scope + invariants · [docs/deployment.md](docs/deployment.md) — mainnet runbook
 - [SECURITY.md](SECURITY.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [CHANGELOG.md](CHANGELOG.md)
 
 ## Security model

@@ -70,17 +70,24 @@ Both settle atomically, optionally as a **Jito bundle**, so a multi-step
 resolution (release + fee + account close) lands indivisibly with no
 front-running window.
 
-## Why not just use…?
+## Custody vs. atomicity — which layer solves what?
 
-| Mechanism | What it actually gives you | Why it's not enough alone |
-|-----------|----------------------------|---------------------------|
-| **Jito bundle** | Atomic, ordered, front-run-proof execution | It's a delivery envelope, not authorization — every tx in it still needs a valid signature. It never changes *who can sign*. |
-| **Atomic swap** | Trustless simultaneous exchange of two on-chain assets | Makes escrow *unnecessary* when both legs are simultaneous; useless the moment there's a time gap or a third-party dispute. |
-| **Multisig** (e.g. Squads) | No *single* key controls the funds | Still key-based custody: a quorum can send funds *anywhere*. It bounds *how many* sign, not *where money goes*. A colluding quorum can steal. |
-| **PDA escrow program** | The **program**, not any keyholder, decides where funds go | ✅ The right primitive. This is what makes "release but can't steal" structural. |
+A common instinct is to reach for Jito bundles or atomic swaps to stop a
+moderator stealing. They're the wrong *layer* for **custody** — but they're
+exactly right for their own layer, and **this SDK ships both** (see
+[Atomic swaps & Jito bundles](#atomic-swaps--jito-bundles)). The point below isn't
+"don't use them" — it's "use each for the job it actually does."
 
-This project uses the keyless-vault model for **custody** and Jito bundles for
-**atomic settlement** — the two layers the alternatives conflate.
+| Mechanism | Layer it solves | Stops a moderator stealing? | In this repo |
+|-----------|-----------------|-----------------------------|--------------|
+| **Jito bundle** | delivery — atomic, ordered, front-run-proof | ❌ a delivery envelope, not authorization; every tx still needs its own signatures | ✅ used for atomic settlement — `{ viaBundle: true }` |
+| **Atomic swap** | simultaneous trade — both legs or neither | ❌ n/a — it removes the *need* for escrow when the trade is instant | ✅ first-class `AtomicSwapClient` |
+| **Multisig** (Squads) | key threshold — no single key | ❌ a quorum can still send funds anywhere | recommended for the arbiter / upgrade authority |
+| **Keyless vault** (PDA / presign) | **custody — destination is fixed, not chosen** | ✅ **yes, structurally** | ✅ the core primitive |
+
+So: **keyless vault** for custody, **Jito bundles** for atomic settlement,
+**atomic swaps** for the instant-trade happy path — each doing the one job it's
+good at, all in this SDK.
 
 ## Atomic swaps & Jito bundles
 

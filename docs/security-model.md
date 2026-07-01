@@ -43,6 +43,8 @@ structural property, not a policy.
   funds anywhere — it bounds *who signs*, not *where money goes*.
 - **Jito bundle / atomic swap**: solve atomicity/ordering, not authorization. A
   bundle still needs every signature; an atomic swap can't express a deferred
-  third-party dispute.
+  third-party dispute. Both ship as first-class features here — Jito for atomic
+  settlement delivery, atomic swaps for the instant-trade happy path — they're
+  just not the custody mechanism.
 
 See [specs/protocol.md](../specs/protocol.md) for the normative invariants.

@@ -27,6 +27,20 @@ vault has no usable private key.
   READMEs, `SECURITY.md`, `CONTRIBUTING.md`, and a devnet example.
 - CI: build + test all workspaces and an SBF build of the program.
 
+### Added (atomic swaps + real Jito bundles)
+
+- **Atomic swaps** (`AtomicSwapClient`, `buildAtomicSwapTransaction`) — exchange
+  two assets (token↔token or token↔SOL) between two parties in one transaction;
+  both sign, either both legs settle or neither. Custody-free happy path.
+  Verified on-chain.
+- **Real Jito bundle client** — `jitoTipInstruction`, `sendBundleAndConfirm`,
+  `getBundleStatuses`, `getJitoTipAccounts`, `JITO_TIP_ACCOUNTS`. The previous
+  `sendBundle` shipped no tip and would not land; bundles now include the
+  required tip. Escrow `settle(...)` and `swap.execute(...)` accept
+  `{ viaBundle: true }`.
+- MCP gains an `atomic_swap` tool. Docs: [`docs/atomic-swap.md`](docs/atomic-swap.md),
+  [`docs/jito.md`](docs/jito.md).
+
 ### Security
 
 - Program hardening (pre-audit): settlement drains the **full live vault

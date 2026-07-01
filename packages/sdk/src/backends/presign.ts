@@ -19,7 +19,7 @@ import type {
 } from '../types.js';
 import { ataFor, buildOutcomeTransaction, standardOutcomes } from '../outcomes.js';
 import { createNonceAccount, readNonce } from '../nonce.js';
-import { sendJitoBundle, type SendBundleOptions } from '../jito.js';
+import { jitoTipInstruction, sendBundleAndConfirm, type SendBundleOptions } from '../jito.js';
 
 export interface PresignBackendOptions {
   connection: Connection;
@@ -156,7 +156,7 @@ export class PresignBackend {
     escrow: KeylessEscrow,
     outcomeId: string,
     authorizer: Keypair,
-    options: { viaBundle?: boolean; bundle?: SendBundleOptions } = {},
+    options: { viaBundle?: boolean; tipLamports?: number; bundle?: SendBundleOptions } = {},
   ): Promise<SettlementResult> {
     const outcome = escrow.outcomes.find((o) => o.id === outcomeId);
     if (!outcome) throw new Error(`unknown outcome '${outcomeId}'`);
@@ -175,7 +175,14 @@ export class PresignBackend {
     tx.partialSign(authorizer);
 
     if (options.viaBundle) {
-      const bundleId = await sendJitoBundle([tx], options.bundle);
+      // The pre-signed outcome tx must not be modified (that would break the
+      // vault signature), so the required Jito tip rides in a separate tx signed
+      // by the authorizer; the two land atomically as one bundle.
+      const tip = new Transaction().add(jitoTipInstruction(authorizer.publicKey, options.tipLamports));
+      tip.feePayer = authorizer.publicKey;
+      tip.recentBlockhash = (await this.connection.getLatestBlockhash('confirmed')).blockhash;
+      tip.sign(authorizer);
+      const { bundleId } = await sendBundleAndConfirm([tx, tip], options.bundle);
       return { outcomeId, signature: bundleId, viaBundle: true };
     }
 

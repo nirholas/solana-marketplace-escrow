@@ -82,6 +82,35 @@ front-running window.
 This project uses the keyless-vault model for **custody** and Jito bundles for
 **atomic settlement** — the two layers the alternatives conflate.
 
+## Atomic swaps & Jito bundles
+
+Escrow is for the *asynchronous* trade. When a trade is **simultaneous and fully
+on-chain**, you don't need escrow at all — settle it as an **atomic swap**: both
+assets move in one transaction, both parties sign, either both legs execute or
+neither does. No custody, no arbiter. (Verified on-chain: 1.0 token A ↔ 2.0 token
+B in a single tx.)
+
+```ts
+import { AtomicSwapClient } from 'keyless-escrow';
+const swap = new AtomicSwapClient({ connection });
+await swap.execute(
+  { a: { owner: alice.publicKey, mint: tokenA, amount: 1_000_000n },
+    b: { owner: bob.publicKey,   mint: tokenB, amount: 2_000_000_000n } },
+  [alice, bob],                          // both sign — the atomicity guarantee
+  { viaBundle: true },                   // optional: front-run-proof via Jito
+);
+```
+
+And **Jito bundles** are a real, tipped integration — a settlement or swap can be
+delivered as an atomic, front-run-proof bundle (with the required tip to a Jito
+tip account, which a naive `sendBundle` omits):
+
+```ts
+await escrowSvc.settle(escrow, 'release:by-arbiter', arbiter, { viaBundle: true });
+```
+
+See [docs/atomic-swap.md](docs/atomic-swap.md) and [docs/jito.md](docs/jito.md).
+
 ## Quickstart
 
 ```bash
@@ -130,6 +159,7 @@ node --experimental-strip-types examples/devnet-lifecycle.ts
 
 - [specs/protocol.md](specs/protocol.md) — the normative authorization model + wire formats
 - [docs/architecture.md](docs/architecture.md) — how the pieces fit together
+- [docs/atomic-swap.md](docs/atomic-swap.md) — custody-free P2P swaps · [docs/jito.md](docs/jito.md) — atomic bundle settlement
 - [docs/security-model.md](docs/security-model.md) — threat model + trust assumptions
 - [program/AUDIT.md](program/AUDIT.md) — audit scope + invariants · [docs/deployment.md](docs/deployment.md) — mainnet runbook
 - [SECURITY.md](SECURITY.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [CHANGELOG.md](CHANGELOG.md)

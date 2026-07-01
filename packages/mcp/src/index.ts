@@ -4,6 +4,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { Connection, PublicKey } from '@solana/web3.js';
 import {
   PresignBackend,
+  AtomicSwapClient,
   serializeEscrow,
   deserializeEscrow,
   type Party,
@@ -17,6 +18,7 @@ const connection = new Connection(RPC, 'confirmed');
 const signers = SignerRegistry.fromEnv();
 const store = EscrowStore.fromEnv();
 const svc = new PresignBackend({ connection });
+const swapSvc = new AtomicSwapClient({ connection });
 
 type ToolResult = {
   content: Array<{ type: 'text'; text: string }>;
@@ -204,6 +206,43 @@ server.registerTool(
     }
     const result = await svc.settle(escrow, outcomeId, signer, { viaBundle });
     return ok({ settled: outcomeId, signature: result.signature, viaBundle: result.viaBundle });
+  }),
+);
+
+server.registerTool(
+  'atomic_swap',
+  {
+    title: 'Atomic P2P swap (no escrow, no arbiter)',
+    description:
+      'Swap two assets between two parties in ONE atomic transaction — either both legs settle ' +
+      'or neither does. The trustless happy path when a trade is simultaneous and on-chain (no ' +
+      'custody window). This server must hold BOTH owner keys. Omit a mint for a native SOL leg. ' +
+      'Optionally delivered atomically via a Jito bundle.',
+    inputSchema: {
+      aOwner: z.string().describe('Party A wallet address (must be a held key)'),
+      aMint: z.string().optional().describe('Party A asset mint; omit for SOL'),
+      aAmount: z.string().describe('Party A amount in base units (lamports for SOL)'),
+      bOwner: z.string().describe('Party B wallet address (must be a held key)'),
+      bMint: z.string().optional().describe('Party B asset mint; omit for SOL'),
+      bAmount: z.string().describe('Party B amount in base units'),
+      viaBundle: z.boolean().optional().describe('Deliver atomically via a Jito bundle'),
+    },
+  },
+  guard(async ({ aOwner, aMint, aAmount, bOwner, bMint, bAmount, viaBundle }) => {
+    const aKey = signers.get(aOwner);
+    const bKey = signers.get(bOwner);
+    if (!aKey) return fail(`this server does not hold party A key ${aOwner}`);
+    if (!bKey) return fail(`this server does not hold party B key ${bOwner}`);
+    const result = await swapSvc.execute(
+      {
+        a: { owner: aKey.publicKey, mint: aMint ? new PublicKey(aMint) : undefined, amount: BigInt(aAmount) },
+        b: { owner: bKey.publicKey, mint: bMint ? new PublicKey(bMint) : undefined, amount: BigInt(bAmount) },
+        feePayer: aKey.publicKey,
+      },
+      [aKey, bKey],
+      { viaBundle },
+    );
+    return ok({ swapped: true, signature: result.signature, viaBundle: result.viaBundle });
   }),
 );
 

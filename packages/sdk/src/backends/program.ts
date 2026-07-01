@@ -15,6 +15,7 @@ import {
 } from '@solana/spl-token';
 import type { CreateEscrowParams, Outcome, Parties, Party } from '../types.js';
 import { standardOutcomes } from '../outcomes.js';
+import { jitoTipInstruction, sendBundleAndConfirm, type SendBundleOptions } from '../jito.js';
 
 /**
  * Anchor instruction discriminators — the first 8 bytes of
@@ -200,20 +201,32 @@ export class ProgramBackend {
     };
   }
 
-  /** Settle one outcome on-chain (the program also enforces the authorizer). */
+  /**
+   * Settle one outcome on-chain (the program also enforces the authorizer).
+   * Optionally delivered atomically via a Jito bundle (tip embedded in the tx).
+   */
   async settle(
     escrow: ProgramEscrow,
     outcomeId: string,
     authorizer: Keypair,
-  ): Promise<{ outcomeId: string; signature: string }> {
+    options: { viaBundle?: boolean; tipLamports?: number; bundle?: SendBundleOptions } = {},
+  ): Promise<{ outcomeId: string; signature: string; viaBundle: boolean }> {
     const instruction = this.settleInstruction(escrow, outcomeId, authorizer.publicKey);
-    const signature = await sendAndConfirmTransaction(
-      this.connection,
-      new Transaction().add(instruction),
-      [authorizer],
-      { commitment: 'confirmed' },
-    );
-    return { outcomeId, signature };
+    const tx = new Transaction().add(instruction);
+
+    if (options.viaBundle) {
+      tx.add(jitoTipInstruction(authorizer.publicKey, options.tipLamports));
+      tx.feePayer = authorizer.publicKey;
+      tx.recentBlockhash = (await this.connection.getLatestBlockhash('confirmed')).blockhash;
+      tx.sign(authorizer);
+      const { bundleId } = await sendBundleAndConfirm([tx], options.bundle);
+      return { outcomeId, signature: bundleId, viaBundle: true };
+    }
+
+    const signature = await sendAndConfirmTransaction(this.connection, tx, [authorizer], {
+      commitment: 'confirmed',
+    });
+    return { outcomeId, signature, viaBundle: false };
   }
 
   /** Read the on-chain escrow state. */

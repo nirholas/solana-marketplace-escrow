@@ -46,8 +46,22 @@ export type { BuildOutcomeArgs } from './outcomes.js';
 
 export { createNonceAccount, readNonce } from './nonce.js';
 
-export { sendJitoBundle, JITO_BLOCK_ENGINES } from './jito.js';
-export type { SendBundleOptions } from './jito.js';
+export {
+  sendJitoBundle,
+  sendBundleAndConfirm,
+  getBundleStatuses,
+  getJitoTipAccounts,
+  jitoTipInstruction,
+  randomTipAccount,
+  withTip,
+  JITO_BLOCK_ENGINES,
+  JITO_TIP_ACCOUNTS,
+  DEFAULT_TIP_LAMPORTS,
+} from './jito.js';
+export type { SendBundleOptions, JitoOptions, BundleStatus } from './jito.js';
+
+export { buildAtomicSwapTransaction, AtomicSwapClient } from './atomic-swap.js';
+export type { SwapLeg, AtomicSwapParams, AtomicSwapResult } from './atomic-swap.js';
 
 export { PresignBackend } from './backends/presign.js';
 export type { PresignBackendOptions } from './backends/presign.js';

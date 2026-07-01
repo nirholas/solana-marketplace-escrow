@@ -3,65 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Keyless Escrow — the moderator can't run off with the money</title>
+    <title>Keyless Escrow — live demo</title>
     <meta
       name="description"
-      content="Live devnet demo of non-custodial Solana escrow: a keyless vault where a moderator can release funds but never steal them."
+      content="Live Solana devnet demo: keyless escrow (moderators can release but never steal), atomic swaps, and custodial moderator release."
     />
   </head>
   <body>
     <div id="app">
       <header class="hero">
-        <div class="badge">Solana · devnet · live</div>
-        <h1>Keyless Escrow</h1>
-        <p class="tagline">
-          A non-custodial vault with <strong>no private key</strong>. The moderator can
-          <em>release</em> funds — but the destinations are frozen at funding time, so they can
-          <strong>never steal</strong> them.
+        <div class="eyebrow"><span class="dot"></span> Solana · devnet · live</div>
+        <h1>Non-custodial escrow, three ways</h1>
+        <p>
+          A vault with <strong>no private key</strong>, an <em>atomic swap</em> that needs no escrow at
+          all, and a moderator console where the <strong>platform holds the keys, not the mods</strong>.
+          Everything below runs real transactions on devnet.
         </p>
       </header>
 
-      <section class="panel" id="setup-panel">
-        <div class="panel-head">
-          <h2><span class="step-num">1</span> Set up a scenario</h2>
-          <p>Generate three fresh devnet wallets, fund the buyer, and mint a throwaway test token.</p>
-        </div>
-        <div class="row">
-          <label class="field">
-            <span>Buyer secret key (base58) — optional</span>
-            <input id="buyer-secret" type="password" placeholder="leave blank to generate + airdrop" />
-          </label>
-          <button id="setup-btn" class="primary">Run setup</button>
-        </div>
-        <div id="parties" class="parties hidden"></div>
-      </section>
+      <nav class="tabs" id="tabs">
+        <button class="tab active" data-tab="keyless">Keyless escrow<span class="t-sub">arbiter can't steal</span></button>
+        <button class="tab" data-tab="swap">Atomic swap<span class="t-sub">no custody, no arbiter</span></button>
+        <button class="tab" data-tab="custodial">Moderator console<span class="t-sub">master-funded release</span></button>
+      </nav>
 
-      <section class="panel hidden" id="escrow-panel">
-        <div class="panel-head">
-          <h2><span class="step-num">2</span> Open the keyless escrow</h2>
-          <p>Deposit the token, pre-sign the four fixed-destination outcomes, then destroy the vault key.</p>
-        </div>
-        <button id="open-btn" class="primary">Open &amp; fund escrow</button>
-        <div id="vault" class="vault hidden"></div>
-      </section>
-
-      <section class="panel hidden" id="outcomes-panel">
-        <div class="panel-head">
-          <h2><span class="step-num">3</span> Resolve it</h2>
-          <p>
-            Each outcome pays a <strong>fixed</strong> party and is authorized by exactly one signer.
-            Notice there is no button — and no possible transaction — that pays the arbiter.
-          </p>
-        </div>
-        <div id="outcomes" class="outcomes"></div>
-        <button id="status-btn" class="ghost">Refresh on-chain balances</button>
-        <div id="balances" class="balances"></div>
-      </section>
-
-      <section class="panel log-panel">
-        <div class="panel-head"><h2>Activity</h2></div>
-        <div id="log" class="log"></div>
-      </section>
+      <main id="view"></main>
 
       <footer>
         <a href="https://github.com/nirholas/solana-marketplace-escrow" target="_blank" rel="noreferrer"

@@ -1,0 +1,62 @@
+:root {
+  --bg: #0a0b0f; --panel: #14161d; --panel2: #1b1e27; --line: #262a35;
+  --text: #e7e9ee; --muted: #8b90a0; --accent: #6ee7b7; --blue: #60a5fa;
+  --err: #f87171; --warn: #fbbf24; --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; }
+.hidden { display: none !important; }
+.mono { font-family: var(--mono); }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.err { color: var(--err); font-size: 13px; margin-top: 8px; min-height: 16px; }
+
+/* login */
+.login { min-height: 100vh; display: grid; place-items: center; padding: 20px;
+  background: radial-gradient(900px 500px at 50% -10%, #171a25, var(--bg) 60%); }
+.login-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 32px; width: 360px; }
+.login-card h1 { margin: 0 0 6px; }
+.login-card p { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
+input { width: 100%; background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+  padding: 11px 12px; border-radius: 10px; font-size: 14px; margin-bottom: 10px; }
+input:focus { outline: none; border-color: var(--accent); }
+button { cursor: pointer; border: 1px solid transparent; border-radius: 10px; padding: 11px 16px; font-weight: 600; font-size: 14px; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+.primary { background: var(--accent); color: #06231a; width: 100%; }
+.ghost { background: transparent; border-color: var(--line); color: var(--text); }
+
+/* dashboard */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;
+  border-bottom: 1px solid var(--line); background: var(--panel); }
+.brand { font-weight: 700; }
+.meta { display: flex; align-items: center; gap: 14px; font-size: 13px; }
+.badge { text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 999px;
+  border: 1px solid var(--line); }
+.badge.admin { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.badge.moderator { color: var(--blue); border-color: color-mix(in srgb, var(--blue) 40%, transparent); }
+main { max-width: 1000px; margin: 0 auto; padding: 24px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 20px; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; }
+.panel h2 { margin: 0 0 14px; font-size: 16px; }
+.bundle-toggle { font-size: 13px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.row input { flex: 1; min-width: 160px; margin: 0; }
+.row .primary { width: auto; }
+
+.empty { color: var(--muted); padding: 12px 0; }
+.escrow { display: grid; grid-template-columns: 1.1fr 1fr 1fr 0.8fr 0.8fr 1.3fr; gap: 10px; align-items: center;
+  padding: 12px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; background: var(--panel2); }
+.escrow.released { opacity: 0.65; }
+.escrow.refunded { opacity: 0.65; }
+.cell { display: flex; flex-direction: column; gap: 3px; font-size: 13px; }
+.lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.actions { flex-direction: row; gap: 6px; justify-content: flex-end; }
+.pill { font-size: 11px; padding: 2px 8px; border-radius: 999px; width: fit-content; }
+.pill.active { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+.pill.released { background: color-mix(in srgb, var(--blue) 16%, transparent); color: var(--blue); }
+.pill.refunded { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
+.mini { padding: 6px 10px; font-size: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--text); }
+.mini.release:hover { border-color: var(--accent); }
+.mini.refund:hover { border-color: var(--warn); }
+
+@media (max-width: 760px) { .escrow { grid-template-columns: 1fr 1fr; } }

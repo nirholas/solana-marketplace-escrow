@@ -11,3 +11,7 @@ program/.anchor/
 demo/dist/
 .vite/
 *.tsbuildinfo
+
+# dashboard runtime store — holds escrow secret keys, never commit
+.escrows.json
+apps/*/.escrows.json

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keyless Escrow — Admin / Moderator</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- Login -->
+    <div id="login" class="login">
+      <div class="login-card">
+        <h1>Escrow Console</h1>
+        <p>Moderators release escrow from here. The platform holds the keys — you never do.</p>
+        <input id="passcode" type="password" placeholder="Passcode" autocomplete="current-password" />
+        <button id="login-btn" class="primary">Sign in</button>
+        <div id="login-err" class="err"></div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dash" class="dash hidden">
+      <header class="topbar">
+        <div class="brand">Escrow Console</div>
+        <div class="meta">
+          <span id="role-badge" class="badge"></span>
+          <span class="mono" id="master" title="master wallet (pays fees + tip)"></span>
+          <button id="logout" class="ghost">Sign out</button>
+        </div>
+      </header>
+
+      <main>
+        <section id="create-panel" class="panel hidden">
+          <h2>Create escrow</h2>
+          <div class="row">
+            <input id="c-seller" placeholder="Seller address" class="mono" />
+            <input id="c-mint" placeholder="Token mint" class="mono" />
+            <input id="c-amount" placeholder="Amount (base units)" />
+            <button id="create-btn" class="primary">Create</button>
+          </div>
+          <div id="create-err" class="err"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Escrows</h2>
+            <label class="bundle-toggle"><input type="checkbox" id="via-bundle" /> release via Jito bundle</label>
+          </div>
+          <div id="escrows"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

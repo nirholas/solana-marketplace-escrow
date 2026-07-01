@@ -6,6 +6,7 @@
   "description": "Non-custodial Solana escrow SDK — a keyless vault where moderators can release funds but never steal them. Anchor PDA program, durable-nonce pre-signing, atomic Jito settlement. SDK + MCP + x402.",
   "workspaces": [
     "packages/*",
+    "apps/*",
     "demo"
   ],
   "scripts": {

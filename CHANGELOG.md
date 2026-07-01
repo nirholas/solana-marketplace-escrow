@@ -41,6 +41,18 @@ vault has no usable private key.
 - MCP gains an `atomic_swap` tool. Docs: [`docs/atomic-swap.md`](docs/atomic-swap.md),
   [`docs/jito.md`](docs/jito.md).
 
+### Added (custodial backend + admin/moderator console)
+
+- **`CustodialBackend`** — the `nirholas/atomic` pattern: a master wallet holds
+  SOL and the platform holds each escrow key; a release is one atomic transaction
+  where the master pays the fee (+ optional Jito tip) and the escrow key signs the
+  transfer. Signers are exactly `{master, escrow}` — the moderator holds no key.
+  Verified on-chain.
+- **`apps/dashboard`** — an admin/moderator web console. Admins create escrows;
+  moderators click "Release → seller" / "Refund → buyer"; the server fires the
+  atomic release. Verified end-to-end (admin create → moderator release → seller
+  paid). Docs: [`docs/custodial.md`](docs/custodial.md).
+
 ### Security
 
 - Program hardening (pre-audit): settlement drains the **full live vault

@@ -71,3 +71,6 @@ export type { ProgramBackendOptions, ProgramEscrow } from './backends/program.js
 
 export { serializeEscrow, deserializeEscrow } from './serialize.js';
 export type { SerializedEscrow } from './serialize.js';
+
+export { CustodialBackend, buildCustodialSettle } from './backends/custodial.js';
+export type { CustodialEscrow, CustodialSettleArgs } from './backends/custodial.js';

@@ -46,12 +46,22 @@ The safe authorization model, enforced by construction:
   third address, including their own. There is no instruction, in any outcome,
   that pays anyone else, and no key to forge a new one.
 
-## Two backends, one API
+## Three backends, one API
 
-| Backend     | Vault is keyless…    | Needs a deployed program? | Best for |
-|-------------|----------------------|---------------------------|----------|
-| **`presign`** | …by **convention**   | No — runs today, anywhere | Fast integration, zero deploy |
-| **`program`** | …by **construction** | Yes — Anchor PDA program  | Production / maximal assurance |
+| Backend     | Trust model | Needs a deployed program? | Best for |
+|-------------|-------------|---------------------------|----------|
+| **`presign`** | keyless by **convention** (ephemeral key destroyed) | No — runs today, anywhere | Fast integration, zero deploy |
+| **`program`** | keyless by **construction** (PDA has no key) | Yes — Anchor PDA program  | Production / maximal assurance |
+| **`custodial`** | **platform-custodial** (backend holds keys) | No | Admin/moderator console; master-funded atomic release (the `nirholas/atomic` pattern) |
+
+The first two are **keyless** — nobody can steal, not even the platform. The
+third, **`custodial`**, is the pattern you may actually want for a moderated
+marketplace: the **platform** holds a master wallet (SOL) + each escrow key, and
+a **moderator releases from a web console** — the backend fires **one atomic
+transaction** where the master pays the fee and the escrow key signs the
+transfer (the master acting *on behalf of* the escrow wallet). Moderators hold no
+keys. See [`apps/dashboard`](apps/dashboard) and [docs/custodial.md](docs/custodial.md).
+Verified end-to-end: admin creates an escrow → moderator clicks release → seller paid.
 
 **`presign`** — an ephemeral vault token account and a **durable nonce** hold the
 funds. The vault key pre-signs the complete set of fixed-destination outcomes,
@@ -159,6 +169,7 @@ node --experimental-strip-types examples/devnet-lifecycle.ts
 | [`program`](program) | Anchor PDA escrow program (the `program` backend) | ✅ Compiles + on-chain lifecycle verified (`E8Spo…Ckda`) |
 | [`packages/mcp`](packages/mcp) | MCP server exposing the escrow lifecycle as agent tools | ✅ Ready — handshake verified |
 | [`packages/x402`](packages/x402) | x402 pay-per-use escrow-as-a-service API | ✅ Ready — builds & serves |
+| [`apps/dashboard`](apps/dashboard) | Admin/moderator web console (custodial atomic release) | ✅ Ready — E2E verified |
 | [`demo`](demo) | Browser demo of the full lifecycle on devnet | ✅ Ready — builds |
 | [`examples`](examples) | Runnable end-to-end scripts | ✅ Devnet lifecycle |
 
@@ -167,6 +178,7 @@ node --experimental-strip-types examples/devnet-lifecycle.ts
 - [specs/protocol.md](specs/protocol.md) — the normative authorization model + wire formats
 - [docs/architecture.md](docs/architecture.md) — how the pieces fit together
 - [docs/atomic-swap.md](docs/atomic-swap.md) — custody-free P2P swaps · [docs/jito.md](docs/jito.md) — atomic bundle settlement
+- [docs/custodial.md](docs/custodial.md) — the custodial backend + admin/moderator console (`nirholas/atomic` pattern)
 - [docs/security-model.md](docs/security-model.md) — threat model + trust assumptions
 - [program/AUDIT.md](program/AUDIT.md) — audit scope + invariants · [docs/deployment.md](docs/deployment.md) — mainnet runbook
 - [SECURITY.md](SECURITY.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [CHANGELOG.md](CHANGELOG.md)

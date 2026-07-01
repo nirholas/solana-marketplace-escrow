@@ -52,5 +52,8 @@ export type { SendBundleOptions } from './jito.js';
 export { PresignBackend } from './backends/presign.js';
 export type { PresignBackendOptions } from './backends/presign.js';
 
+export { ProgramBackend, DEFAULT_PROGRAM_ID } from './backends/program.js';
+export type { ProgramBackendOptions, ProgramEscrow } from './backends/program.js';
+
 export { serializeEscrow, deserializeEscrow } from './serialize.js';
 export type { SerializedEscrow } from './serialize.js';

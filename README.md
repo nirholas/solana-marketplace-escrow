@@ -120,11 +120,18 @@ node --experimental-strip-types examples/devnet-lifecycle.ts
 | Path | What it is | Status |
 |------|-----------|--------|
 | [`packages/sdk`](packages/sdk) | **`keyless-escrow`** — the TypeScript SDK (presign backend, Jito settlement, outcomes) | ✅ Ready — tested |
-| [`program`](program) | Anchor PDA escrow program (the `program` backend) | 🚧 In progress |
+| [`program`](program) | Anchor PDA escrow program (the `program` backend) | ✅ Compiles to SBF · deploy-ready (`E8Spo…Ckda`) |
 | [`packages/mcp`](packages/mcp) | MCP server exposing the escrow lifecycle as agent tools | ✅ Ready — handshake verified |
 | [`packages/x402`](packages/x402) | x402 pay-per-use escrow-as-a-service API | ✅ Ready — builds & serves |
 | [`demo`](demo) | Browser demo of the full lifecycle on devnet | ✅ Ready — builds |
 | [`examples`](examples) | Runnable end-to-end scripts | ✅ Devnet lifecycle |
+
+## Documentation
+
+- [specs/protocol.md](specs/protocol.md) — the normative authorization model + wire formats
+- [docs/architecture.md](docs/architecture.md) — how the pieces fit together
+- [docs/security-model.md](docs/security-model.md) — threat model + trust assumptions
+- [SECURITY.md](SECURITY.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [CHANGELOG.md](CHANGELOG.md)
 
 ## Security model
 

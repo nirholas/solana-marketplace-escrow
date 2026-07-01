@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  node:
+    name: SDK · MCP · x402 · demo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Typecheck + build all workspaces
+        run: npm run build --workspaces --if-present
+      - name: Test all workspaces
+        run: npm test --workspaces --if-present
+
+  program:
+    name: Anchor program (SBF build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Solana CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+      - name: Build program (SBF bytecode)
+        working-directory: program
+        run: cargo-build-sbf
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keyless_escrow.so
+          path: program/target/deploy/keyless_escrow.so

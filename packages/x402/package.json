@@ -31,5 +31,21 @@
     "@types/node": "^22.10.0",
     "typescript": "^5.7.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "author": "nirholas",
+  "homepage": "https://github.com/nirholas/solana-marketplace-escrow/tree/main/packages/x402#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nirholas/solana-marketplace-escrow.git",
+    "directory": "packages/x402"
+  },
+  "bugs": {
+    "url": "https://github.com/nirholas/solana-marketplace-escrow/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

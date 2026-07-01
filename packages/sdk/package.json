@@ -42,5 +42,21 @@
     "typescript": "^5.7.0",
     "vitest": "^2.1.8"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "author": "nirholas",
+  "homepage": "https://github.com/nirholas/solana-marketplace-escrow#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nirholas/solana-marketplace-escrow.git",
+    "directory": "packages/sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/nirholas/solana-marketplace-escrow/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

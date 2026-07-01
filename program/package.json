@@ -1,0 +1,22 @@
+{
+  "name": "keyless-escrow-program",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Anchor PDA escrow program — the keyless-by-construction backend for keyless-escrow.",
+  "scripts": {
+    "build": "anchor build",
+    "test": "anchor test",
+    "deploy:devnet": "bash ../scripts/deploy.sh devnet",
+    "deploy:mainnet": "bash ../scripts/deploy.sh mainnet-beta"
+  },
+  "devDependencies": {
+    "@coral-xyz/anchor": "^0.31.1",
+    "@solana/spl-token": "^0.4.9",
+    "@types/chai": "^4.3.11",
+    "@types/mocha": "^10.0.6",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "keyless-escrow",
+  "version": "0.1.0",
+  "description": "Non-custodial, arbiter-mediated escrow for Solana. The vault has no private key, so a moderator can RELEASE funds but can never STEAL them. Atomic settlement via Jito bundles.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "solana",
+    "escrow",
+    "non-custodial",
+    "keyless",
+    "arbiter",
+    "jito",
+    "durable-nonce",
+    "p2p"
+  ],
+  "dependencies": {
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.98.0",
+    "bs58": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.8"
+  },
+  "license": "MIT"
+}

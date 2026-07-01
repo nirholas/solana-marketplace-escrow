@@ -1,0 +1,19 @@
+{
+  "name": "keyless-escrow-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Non-custodial, arbiter-mediated escrow for Solana — the vault has no private key, so a moderator can release funds but can never steal them.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -121,9 +121,9 @@ node --experimental-strip-types examples/devnet-lifecycle.ts
 |------|-----------|--------|
 | [`packages/sdk`](packages/sdk) | **`keyless-escrow`** — the TypeScript SDK (presign backend, Jito settlement, outcomes) | ✅ Ready — tested |
 | [`program`](program) | Anchor PDA escrow program (the `program` backend) | 🚧 In progress |
-| [`packages/mcp`](packages/mcp) | MCP server exposing the escrow lifecycle as agent tools | 🚧 In progress |
-| [`packages/x402`](packages/x402) | x402 pay-per-use escrow-as-a-service API | 🚧 In progress |
-| [`demo`](demo) | Browser demo of the full lifecycle on devnet | 🚧 In progress |
+| [`packages/mcp`](packages/mcp) | MCP server exposing the escrow lifecycle as agent tools | ✅ Ready — handshake verified |
+| [`packages/x402`](packages/x402) | x402 pay-per-use escrow-as-a-service API | ✅ Ready — builds & serves |
+| [`demo`](demo) | Browser demo of the full lifecycle on devnet | ✅ Ready — builds |
 | [`examples`](examples) | Runnable end-to-end scripts | ✅ Devnet lifecycle |
 
 ## Security model

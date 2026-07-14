@@ -14,7 +14,7 @@
     "test": "npm run test --workspaces --if-present",
     "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules"
   },
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "engines": {
     "node": ">=20"
   }

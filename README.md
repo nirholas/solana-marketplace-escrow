@@ -214,4 +214,4 @@ npm run build --workspaces --if-present
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+All rights reserved. See [LICENSE](LICENSE).

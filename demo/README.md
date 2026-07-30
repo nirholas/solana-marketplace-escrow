@@ -19,7 +19,11 @@ mocks, real transactions. Three tabs, each a self-contained flow:
 The demo is static, so it deploys to GitHub Pages on every push via
 [`.github/workflows/deploy-demo.yml`](../.github/workflows/deploy-demo.yml):
 
-> **https://nirholas.github.io/solana-marketplace-escrow/**
+> **https://nirholas.github.io/solana-marketplace-escrow/** (not live yet)
+
+That URL currently returns 404 because the one-time Pages setup below has not
+been done on this repository. Until it is, run the demo locally or host
+`demo/dist/` yourself.
 
 One-time setup: repo **Settings → Pages → Source: GitHub Actions**. The build
 sets `VITE_BASE=/solana-marketplace-escrow/` so assets resolve under the repo

@@ -5,8 +5,13 @@ usable private key, so a moderator can **release** funds to a participant but ca
 **never steal** them.
 
 ```bash
-npm install keyless-escrow @solana/web3.js
+git clone https://github.com/nirholas/solana-marketplace-escrow.git
+cd solana-marketplace-escrow
+npm install && npm run build
 ```
+
+`keyless-escrow` is not published to npm yet, so install it from source and
+depend on `packages/sdk` (a workspace link, `file:` reference, or git URL).
 
 ## The problem this solves
 

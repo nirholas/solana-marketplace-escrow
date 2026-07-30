@@ -6,9 +6,15 @@ moderator can **release** funds to a participant but can **never steal** them.
 
 > The escrow where the moderator can't run off with the money.
 
-TypeScript SDK · Anchor PDA program · MCP server · x402 pay-per-use API · live demo.
+TypeScript SDK · Anchor PDA program · MCP server · x402 pay-per-use API · browser demo.
 
-**▸ Live demo:** https://nirholas.github.io/solana-marketplace-escrow/ — keyless escrow, atomic swaps, and the moderator console, running real devnet transactions in your browser.
+**▸ Demo:** [`demo/`](demo) runs the keyless escrow, atomic swaps, and the
+moderator console against real devnet transactions in your browser. There is no
+public deployment at the moment (GitHub Pages was never enabled for this repo, so
+the previously advertised Pages URL returns 404). Run it locally with
+`npm install && npm run build && npm run dev -w keyless-escrow-demo`, or host the
+static `demo/dist/` output anywhere. Source:
+https://github.com/nirholas/solana-marketplace-escrow
 
 ---
 
@@ -133,8 +139,13 @@ See [docs/atomic-swap.md](docs/atomic-swap.md) and [docs/jito.md](docs/jito.md).
 ## Quickstart
 
 ```bash
-npm install keyless-escrow @solana/web3.js
+git clone https://github.com/nirholas/solana-marketplace-escrow.git
+cd solana-marketplace-escrow
+npm install && npm run build
 ```
+
+`keyless-escrow` is not published to npm yet, so install it from source and
+depend on `packages/sdk` (a workspace link, `file:` reference, or git URL).
 
 ```ts
 import { Connection, PublicKey } from '@solana/web3.js';

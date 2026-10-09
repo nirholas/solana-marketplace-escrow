@@ -226,3 +226,7 @@ npm run build --workspaces --if-present
 ## License
 
 All rights reserved. See [LICENSE](LICENSE).
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=nirholas/solana-marketplace-escrow&type=Date)](https://www.star-history.com/#nirholas/solana-marketplace-escrow&Date)

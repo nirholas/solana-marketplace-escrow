@@ -1,0 +1,28 @@
+# solana-marketplace-escrow
+
+> Solana escrow SDK: non-custodial, smart-contract escrow where the vault has no private key, so moderators can release funds but never steal them. P2P marketplace escrow with Anchor PDA program, durable-nonce pre-signing, and atomic Jito settlement. TypeScript, MCP, x402.
+
+solana-marketplace-escrow is an open-source repository by nirholas, part of the three.ws ecosystem.
+
+## Docs
+
+- [README](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/README.md): install, usage and reference
+- [The problem](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/README.md#the-problem)
+- [The insight](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/README.md#the-insight)
+- [Three backends, one API](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/README.md#three-backends-one-api)
+- [Custody vs. atomicity: which layer solves what?](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/README.md#custody-vs-atomicity-which-layer-solves-what)
+- [Atomic swaps & Jito bundles](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/README.md#atomic-swaps-jito-bundles)
+- [Quickstart](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/README.md#quickstart)
+- [Repository layout](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/README.md#repository-layout)
+- [Documentation](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/README.md#documentation)
+- [AGENTS.md](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/AGENTS.md): guidance for coding agents
+- [Full text for LLMs](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/llms-full.txt): the README inlined
+
+## Project
+
+- [Source](https://github.com/nirholas/solana-marketplace-escrow)
+- [Issues](https://github.com/nirholas/solana-marketplace-escrow/issues)
+- [Discussions](https://github.com/nirholas/solana-marketplace-escrow/discussions)
+- [Homepage](https://github.com/nirholas/solana-marketplace-escrow)
+- [three.ws](https://three.ws): the platform this is part of
+- [All repositories by nirholas](https://github.com/nirholas/nirholas#readme)

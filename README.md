@@ -1,5 +1,10 @@
 # Non-Custodial Solana Escrow — a keyless vault where moderators can release funds but never steal them
 
+<!-- three.ws:badges -->
+[![GitHub stars](https://img.shields.io/github/stars/nirholas/solana-marketplace-escrow?style=flat&logo=github)](https://github.com/nirholas/solana-marketplace-escrow/stargazers) [![Last commit](https://img.shields.io/github/last-commit/nirholas/solana-marketplace-escrow?style=flat)](https://github.com/nirholas/solana-marketplace-escrow/commits) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat)](https://github.com/nirholas/solana-marketplace-escrow/pulls) [![AI agent friendly](https://img.shields.io/badge/AI%20agents-AGENTS.md%20%2B%20llms.txt-6d5dfc?style=flat)](https://github.com/nirholas/solana-marketplace-escrow/blob/HEAD/AGENTS.md)
+<!-- /three.ws:badges -->
+
+
 **`solana-marketplace-escrow`** is a non-custodial, arbiter-mediated **escrow for
 Solana**. The escrow vault has **no usable private key**, so a P2P marketplace
 moderator can **release** funds to a participant but can **never steal** them.
@@ -230,3 +235,26 @@ All rights reserved. See [LICENSE](LICENSE).
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=nirholas/solana-marketplace-escrow&type=Date)](https://www.star-history.com/#nirholas/solana-marketplace-escrow&Date)
+
+<!-- three.ws:growth -->
+## Support the project
+
+If solana-marketplace-escrow saves you time, **[star it on GitHub](https://github.com/nirholas/solana-marketplace-escrow)**. Stars are how other developers and AI agents find the repositories worth trusting, and they cost you one click.
+
+Know someone who would use it? [Post on X](https://twitter.com/intent/tweet?text=solana-marketplace-escrow%3A%20Solana%20escrow%20SDK%3A%20non-custodial%2C%20smart-contract%20escrow%20where%20the%20vault%20has%20no%20private%20key%2C%20so&url=https%3A%2F%2Fgithub.com%2Fnirholas%2Fsolana-marketplace-escrow) · [Share on Bluesky](https://bsky.app/intent/compose?text=solana-marketplace-escrow%3A%20Solana%20escrow%20SDK%3A%20non-custodial%2C%20smart-contract%20escrow%20where%20the%20vault%20has%20no%20private%20key%2C%20so%20https%3A%2F%2Fgithub.com%2Fnirholas%2Fsolana-marketplace-escrow) · [Share on LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgithub.com%2Fnirholas%2Fsolana-marketplace-escrow) · [Submit to Hacker News](https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fgithub.com%2Fnirholas%2Fsolana-marketplace-escrow&t=solana-marketplace-escrow%3A%20Solana%20escrow%20SDK%3A%20non-custodial%2C%20smart-contract%20escrow%20where%20the%20vault%20has%20no%20private%20key%2C%20so) · [Share on Reddit](https://www.reddit.com/submit?url=https%3A%2F%2Fgithub.com%2Fnirholas%2Fsolana-marketplace-escrow&title=solana-marketplace-escrow%3A%20Solana%20escrow%20SDK%3A%20non-custodial%2C%20smart-contract%20escrow%20where%20the%20vault%20has%20no%20private%20key%2C%20so)
+
+## Built for AI agents too
+
+Coding agents and LLM tooling can read this repo directly: [AGENTS.md](./AGENTS.md), [llms.txt](./llms.txt), [llms-full.txt](./llms-full.txt). Point an agent at `https://github.com/nirholas/solana-marketplace-escrow` and it has the context it needs.
+
+## More from the same author
+
+- [All repositories by nirholas](https://github.com/nirholas/nirholas#readme): the full catalog, grouped by topic
+- [three.ws](https://three.ws): the platform for 3D AI agents with Solana wallets, a skill marketplace and x402 payments
+- Questions or ideas: [open an issue](https://github.com/nirholas/solana-marketplace-escrow/issues) or [start a discussion](https://github.com/nirholas/solana-marketplace-escrow/discussions)
+
+## Contributors
+
+[![Contributors](https://contrib.rocks/image?repo=nirholas/solana-marketplace-escrow)](https://github.com/nirholas/solana-marketplace-escrow/graphs/contributors)
+
+<!-- /three.ws:growth -->

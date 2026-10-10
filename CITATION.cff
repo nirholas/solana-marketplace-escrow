@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+title: "solana-marketplace-escrow"
+abstract: "Solana escrow SDK: non-custodial, smart-contract escrow where the vault has no private key, so moderators can release funds but never steal them. P2P marketplace escrow with Anchor PDA program, durable-nonce pre-signing, and atomic Jito settlement. TypeScript, MCP, x402."
+repository-code: "https://github.com/nirholas/solana-marketplace-escrow"
+url: "https://three.ws"
+authors:
+  - name: three.ws
+    website: "https://three.ws"

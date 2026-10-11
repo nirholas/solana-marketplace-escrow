@@ -18,7 +18,7 @@
   },
   "keywords": ["mcp", "model-context-protocol", "solana", "escrow", "agent", "non-custodial"],
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@modelcontextprotocol/sdk": "^1.31.0",
     "@solana/web3.js": "^1.98.0",
     "bs58": "^6.0.0",
     "keyless-escrow": "*",

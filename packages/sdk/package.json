@@ -40,7 +40,7 @@
   "devDependencies": {
     "@types/node": "^22.10.0",
     "typescript": "^5.7.0",
-    "vitest": "^2.1.8"
+    "vitest": "^5.0.5"
   },
   "license": "MIT",
   "author": "nirholas",

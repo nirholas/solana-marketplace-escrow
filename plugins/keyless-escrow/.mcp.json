@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "keyless-escrow": {
+      "command": "npx",
+      "args": ["-y", "keyless-escrow-mcp"]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "keyless-escrow",
+  "version": "0.1.0",
+  "description": "Non-custodial Solana escrow and atomic swaps with keyless vaults, exposed to agents as an MCP server.",
+  "author": {
+    "name": "nirholas"
+  },
+  "repository": "https://github.com/nirholas/solana-marketplace-escrow",
+  "homepage": "https://github.com/nirholas/solana-marketplace-escrow",
+  "keywords": [
+    "solana",
+    "escrow",
+    "mcp",
+    "atomic-swap",
+    "spl-token"
+  ]
+}

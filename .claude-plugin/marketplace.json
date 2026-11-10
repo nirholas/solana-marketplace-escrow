@@ -1,0 +1,22 @@
+{
+  "name": "solana-marketplace-escrow",
+  "owner": {
+    "name": "nirholas"
+  },
+  "description": "Non-custodial Solana escrow and atomic swaps with keyless vaults, exposed to agents as an MCP server.",
+  "plugins": [
+    {
+      "name": "keyless-escrow",
+      "source": "./plugins/keyless-escrow",
+      "description": "Non-custodial Solana escrow and atomic swaps with keyless vaults, exposed to agents as an MCP server.",
+      "category": "finance",
+      "tags": [
+        "solana",
+        "escrow",
+        "mcp",
+        "atomic-swap",
+        "spl-token"
+      ]
+    }
+  ]
+}

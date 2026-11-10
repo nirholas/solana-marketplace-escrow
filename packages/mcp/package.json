@@ -16,13 +16,20 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "start": "node dist/index.js"
   },
-  "keywords": ["mcp", "model-context-protocol", "solana", "escrow", "agent", "non-custodial"],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "solana",
+    "escrow",
+    "agent",
+    "non-custodial"
+  ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.31.0",
     "@solana/web3.js": "^1.98.0",
     "bs58": "^6.0.0",
     "keyless-escrow": "*",
-    "zod": "^3.24.0"
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

@@ -5,7 +5,7 @@
   "description": "Anchor PDA escrow program — the keyless-by-construction backend for keyless-escrow.",
   "scripts": {
     "build": "anchor build",
-    "test": "anchor test",
+    "test": "anchor test --validator legacy",
     "deploy:devnet": "bash ../scripts/deploy.sh devnet",
     "deploy:mainnet": "bash ../scripts/deploy.sh mainnet-beta"
   },

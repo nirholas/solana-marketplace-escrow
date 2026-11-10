@@ -4,6 +4,25 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Security
+
+- **`program`**: moved to Anchor `1.2.2` (Solana 3.x crates). Anchor `0.31`
+  pulled `rand 0.7.3` through `solana-secp256k1-recover 2.x`
+  (`libsecp256k1 0.6`), which carries a low-severity advisory fixed in
+  `rand 0.8.6`; Solana 3.x replaces that path with `k256`. CPI contexts now
+  take the token program id, as Anchor 1.x requires. Instructions, account
+  structs and constraints are unchanged.
+
+### Fixed
+
+- **`program` tests**: the integration suite now passes the token program,
+  funds the seller and arbiter (they pay rent for the destination ATA), and
+  asserts the `Unauthorized` error code instead of any thrown error, so the
+  unauthorized-release test fails if the program check regresses. `npm test`
+  runs it on `solana-test-validator`.
+
 ## [0.1.0] — 2026-07-01
 
 Initial release: non-custodial, arbiter-mediated escrow for Solana where the

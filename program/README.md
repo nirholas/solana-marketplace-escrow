@@ -32,6 +32,9 @@ is closed on settlement, returning rent to the buyer. Token-2022 compatible
 
 ## Build
 
+The program targets Anchor `1.2.2` (Solana 3.x crates); install the matching CLI with
+`avm install 1.2.2` or `cargo install anchor-cli --version 1.2.2 --locked`.
+
 ```bash
 # With Anchor:
 anchor build
@@ -55,7 +58,7 @@ After deploying to a **new** id, sync it in three places (or run `anchor keys sy
 ## Test
 
 ```bash
-anchor test            # spins up a local validator, deploys, runs tests/keyless-escrow.ts
+npm test              # anchor test --validator legacy: starts solana-test-validator, deploys, runs tests/keyless-escrow.ts
 ```
 
 The suite covers: buyer-confirmed release, arbiter release (dispute → seller),

@@ -58,7 +58,7 @@ A non-custodial escrow. Funds sit in a token account owned by the `escrow` PDA
 cargo-build-sbf            # deterministic SBF build; artifact target/deploy/keyless_escrow.so
 ```
 
-Anchor `0.31.1`, Solana `4.0.2`. For a verifiable on-chain build see
+Anchor `1.2.2`, Solana `4.0.2`. For a verifiable on-chain build see
 [../docs/deployment.md](../docs/deployment.md).
 
 ## Known non-issues / accepted behavior

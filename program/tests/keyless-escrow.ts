@@ -26,6 +26,13 @@ describe('keyless-escrow', () => {
     const arbiter = Keypair.generate();
     const seed = new BN(Math.floor(Math.random() * 1e12));
 
+    // The arbiter and seller sign as `authority`, which pays rent for the
+    // destination ATA (init_if_needed), so they need lamports of their own.
+    for (const kp of [seller, arbiter]) {
+      const sig = await provider.connection.requestAirdrop(kp.publicKey, anchor.web3.LAMPORTS_PER_SOL);
+      await provider.connection.confirmTransaction({ signature: sig, ...(await provider.connection.getLatestBlockhash()) });
+    }
+
     const mint = await createMint(provider.connection, buyer, buyer.publicKey, null, 6);
     const buyerAta = await getOrCreateAssociatedTokenAccount(provider.connection, buyer, mint, buyer.publicKey);
     await mintTo(provider.connection, buyer, mint, buyerAta.address, buyer, BigInt(AMOUNT.toString()));
@@ -38,7 +45,7 @@ describe('keyless-escrow', () => {
 
     await program.methods
       .initialize(seed, AMOUNT)
-      .accounts({ buyer: buyer.publicKey, seller: seller.publicKey, arbiter: arbiter.publicKey, mint })
+      .accounts({ buyer: buyer.publicKey, seller: seller.publicKey, arbiter: arbiter.publicKey, mint, tokenProgram: TOKEN_PROGRAM_ID })
       .rpc();
 
     return { buyer, seller, arbiter, mint, escrow, vault };
@@ -57,17 +64,17 @@ describe('keyless-escrow', () => {
     const { buyer, seller, mint, escrow } = await scenario();
     await program.methods
       .release()
-      .accounts({ authority: buyer.publicKey, escrow, mint, seller: seller.publicKey, rentRecipient: buyer.publicKey })
+      .accounts({ authority: buyer.publicKey, escrow, mint, seller: seller.publicKey, rentRecipient: buyer.publicKey, tokenProgram: TOKEN_PROGRAM_ID })
       .rpc();
     assert.equal((await bal(mint, seller.publicKey)).toString(), AMOUNT.toString());
     assert.deepEqual((await program.account.escrow.fetch(escrow)).state, 1);
   });
 
   it('lets the arbiter release to the seller (dispute won by seller)', async () => {
-    const { seller, arbiter, mint, escrow } = await scenario();
+    const { buyer, seller, arbiter, mint, escrow } = await scenario();
     await program.methods
       .release()
-      .accounts({ authority: arbiter.publicKey, escrow, mint, seller: seller.publicKey, rentRecipient: undefined })
+      .accounts({ authority: arbiter.publicKey, escrow, mint, seller: seller.publicKey, rentRecipient: buyer.publicKey, tokenProgram: TOKEN_PROGRAM_ID })
       .signers([arbiter])
       .rpc();
     assert.equal((await bal(mint, seller.publicKey)).toString(), AMOUNT.toString());
@@ -78,25 +85,25 @@ describe('keyless-escrow', () => {
     const before = await bal(mint, buyer.publicKey);
     await program.methods
       .refund()
-      .accounts({ authority: arbiter.publicKey, escrow, mint, buyer: buyer.publicKey, rentRecipient: buyer.publicKey })
+      .accounts({ authority: arbiter.publicKey, escrow, mint, buyer: buyer.publicKey, rentRecipient: buyer.publicKey, tokenProgram: TOKEN_PROGRAM_ID })
       .signers([arbiter])
       .rpc();
     assert.equal((await bal(mint, buyer.publicKey)) - before, BigInt(AMOUNT.toString()));
   });
 
   it('rejects an unauthorized signer (the seller cannot release to themselves)', async () => {
-    const { seller, mint, escrow } = await scenario();
-    let threw = false;
+    const { buyer, seller, mint, escrow } = await scenario();
+    let code: string | undefined;
     try {
       await program.methods
         .release()
-        .accounts({ authority: seller.publicKey, escrow, mint, seller: seller.publicKey, rentRecipient: seller.publicKey })
+        .accounts({ authority: seller.publicKey, escrow, mint, seller: seller.publicKey, rentRecipient: buyer.publicKey, tokenProgram: TOKEN_PROGRAM_ID })
         .signers([seller])
         .rpc();
-    } catch {
-      threw = true;
+    } catch (err) {
+      code = (err as anchor.AnchorError).error?.errorCode?.code;
     }
-    assert.isTrue(threw, 'seller must not be able to release the escrow');
+    assert.equal(code, 'Unauthorized', 'seller must be rejected by the program, not by a missing account or fee');
   });
 
   it('cannot be locked by a donation to the vault (drains the full balance)', async () => {
@@ -105,7 +112,7 @@ describe('keyless-escrow', () => {
     await mintTo(provider.connection, buyer, mint, vault, buyer, 500_000n);
     await program.methods
       .release()
-      .accounts({ authority: buyer.publicKey, escrow, mint, seller: seller.publicKey, rentRecipient: buyer.publicKey })
+      .accounts({ authority: buyer.publicKey, escrow, mint, seller: seller.publicKey, rentRecipient: buyer.publicKey, tokenProgram: TOKEN_PROGRAM_ID })
       .rpc();
     // Release drains deposit + donation and still closes the vault.
     assert.equal((await bal(mint, seller.publicKey)).toString(), '1500000');

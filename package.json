@@ -23,6 +23,12 @@
     "stream-json@<=3.5.0": "^3.6.0",
     "stream-json@<3.6.0": "^3.6.0",
     "stream-json@<=3.4.0": "^3.6.0",
-    "uuid@<11.1.1": "^11.1.1"
+    "uuid@<11.1.1": "^11.1.1",
+    "bigint-buffer": "$bigint-buffer",
+    "elliptic": "$elliptic"
+  },
+  "devDependencies": {
+    "bigint-buffer": "file:vendor/bigint-buffer",
+    "elliptic": "file:vendor/elliptic"
   }
 }
